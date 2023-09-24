@@ -1,0 +1,7 @@
+void gen_keys(unsigned char* pk, unsigned char* sk, int DBG);
+void gen_rhmss(uint16_t* r, poly* poly_r, uint16_t* h, poly* poly_h, poly* poly_m, unsigned char* pk, unsigned char* ss, int DBG, int N_COEFFS, unsigned char* rm_seed);
+void enc_ntru_3round(unsigned char* c, poly* poly_r, poly* poly_h, poly* poly_m, unsigned long long* tiempo_mult, unsigned long long* tiempo_enc, int DBG, int N_COEFFS);
+void enc_ntru_libntru(unsigned char* c, uint16_t* r, uint16_t* h, poly* poly_m, unsigned long long* tiempo_mult, unsigned long long* tiempo_enc, int DBG, int N_COEFFS);
+void enc_ntru_hw(unsigned char* c, uint16_t* r, uint16_t* h, poly* poly_m, unsigned long long* tiempo_mult, unsigned long long* tiempo_enc, PYNQ_SHARED_MEMORY shared_memory_1, PYNQ_SHARED_MEMORY shared_memory_2, PYNQ_AXI_DMA dma, int DBG, int N_COEFFS);
+void dec_ntru_3round(unsigned char* ss_dec, const unsigned char* ct, const unsigned char* sk, unsigned long long* tiempo_dec, int DBG, int N_COEFFS);
+void dec_ntru_hw(unsigned char* ss_dec, const unsigned char* ct, const unsigned char* sk, unsigned long long* tiempo_dec, PYNQ_SHARED_MEMORY shared_memory_1, PYNQ_SHARED_MEMORY shared_memory_2, PYNQ_AXI_DMA dma, int DBG, int N_COEFFS);
