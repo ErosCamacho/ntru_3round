@@ -1,7 +1,7 @@
 //
 // Verilog code for AXI4-Stream IP-Module of NTRU Serial Multiplier with M AUs 
 // AUs.v - Arithmetic Units
-// santiago@imse-cnm.csic.es (30/10/2020)
+// camacho@imse-cnm.csic.es (24/09/2023)
 //
 
 module aus # 

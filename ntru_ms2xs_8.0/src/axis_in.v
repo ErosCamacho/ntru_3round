@@ -1,7 +1,7 @@
 //
 // Verilog code for AXI4-Stream IP-Module of NTRU Serial Multiplier with M AUs 
 // axis_in.v - AXI4-Stream input interface
-// santiago@imse-cnm.csic.es (31/10/2020)
+// camacho@imse-cnm.csic.es (24/09/2023)
 //
 
 module axis_in #

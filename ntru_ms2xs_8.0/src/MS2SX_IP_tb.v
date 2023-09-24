@@ -1,7 +1,7 @@
 //
 // Verilog code for AXI4-Stream IP-Module of NTRU Serial Multiplier with M AUs 
 // MS2XS_IP_tb.v - TestBench for ms2xs_v1_0
-// santiago@imse-cnm.csic.es (31/10/2020)
+// camacho@imse-cnm.csic.es (24/09/2023)
 //
 
 `timescale 1ns / 1ps
