@@ -16,14 +16,12 @@ The main idea of this repository is twofold:
     <li><a href="#dir-struc">Directory structure</a></li>
     <li><a href="#ip-integ">IP Integration</a></li>
     <li><a href="#pre-pynqz2">Prerequisites for the Pynq-Z2 platform</a></li>
-    <li><a href="#pre-g2imse">Prerequisites for the IMSE platform</a></li>
-	<li><a href="#pre-g2spirs">Prerequisites for the SPIRS platform</a></li>
-    <li><a href="#ins">Installation</a></li>
-	<li><a href="#exa">Example</a></li>
+    <li><a href="#ins-test">Installation and Use of the Test</a></li>
+	<li><a href="#ins-demo">Installation and Use of the Demo</a></li>
+	<li><a href="#example">Example of the Demo</a></li>
     <li><a href="#note">Note for version</a></li>
     <li><a href="#contact">Contact</a></li>
 	<li><a href="#developers">Developers</a></li>
-	<li><a href="#func">Functions descriptions</a></li>
   </ol>
 
 ## Directory structure <a name="dir-struc"></a>
@@ -80,7 +78,7 @@ For further information, see Chapter 4 of the [PhD Dissertation](https://github.
 
 2. Then, issue ```make```. Once it is built, issue ```sudo make install```. 
 
-## Installation and Use of the Test <a name="ins"></a>
+## Installation and Use of the Test <a name="ins-test"></a>
 
 1. For compilation of a specific test:
 
@@ -117,7 +115,7 @@ they must issue: `make Test_509`
 An example, if it is desired to performance 1000 tests on the `ntruhps2048509` parameter set, using a confident limit of 400 with a parallelization coefficient of 10, 
 it has to be typed: `Test_509 -n 1000 -M 10 -y 400`
 
-## Installation and Use of the Demo <a name="ins"></a>
+## Installation and Use of the Demo <a name="ins-demo"></a>
 
 The main idea of the Demo is to interconnect two devices and share information using PQC as the next figure shows. In this case, two Pynq platforms are interconnected 
 in a local network. The two of them are going to generate the key pair (public and private keys). Then, one of them is going to recive the public key of the other one using 
@@ -147,7 +145,7 @@ they must issue: `make Demo_509`
 		- `2`: Show intermediate results.
 		- `3`: Show keys.
 
-## Example of the Demo <a name="ins"></a>
+## Example of the Demo <a name="example"></a>
 
 A demo video example can be seen in the next [link](https://saco.csic.es/index.php/s/Ze9GETKY7zzMJ23). 
 
