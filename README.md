@@ -8,6 +8,8 @@ The main idea of this repository is twofold:
 - Study the countermeasures proposed in the PhD with different implementations.
 - Define a demo in which it is possible to stablish a PQ secure communication between two devices
 
+*Note: All the content of this repository has been implemented using the Pynq Framework.*
+
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
   <ol>
@@ -63,7 +65,7 @@ The next table shows all the implementations delivered in this repository. There
 That is basically the content of the folder `NTRU_3Round.rar\bit\`. As a final user, you can discard (and remove) other implementations and remake the embedded integration using the 
 configuration more suitable for your interest. 
 
-| Parameter set |  N  | CL |
+| Parameter set |  `N`  | `CL` |
 | :------------ | --- | --- |
 | `ntruhps2048509` | 509 | 400 |
 | `ntruhps2048677` | 677 | 516 |
@@ -76,87 +78,87 @@ For further information, see Chapter 4 of the [PhD Dissertation](https://github.
 
 1. Download the PYNQ C-API from https://github.com/mesham/pynq_api
 
-2. So that applications can modify the clock frequency you must edit the file ```src/pynq_api.c``` to replace **0x00** with **address** on _line 327_:
+2. Then, issue ```make```. Once it is built, issue ```sudo make install```. 
 
-    - // return PYNQ_writeMMIO(&(state->mmio_window), &write_data, **0x00**, sizeof(unsigned int));
-    - return PYNQ_writeMMIO(&(state->mmio_window), &write_data, **address**, sizeof(unsigned int));
+## Installation and Use of the Test <a name="ins"></a>
 
-3. Then, issue ```make```. Once it is built, issue ```sudo make install```. 
+1. For compilation of a specific test:
 
-## Prerequisites for the IMSE platform <a name="pre-g2imse"></a>
-
-1. Download the corresponding bitstream of the IMSE platform: ``` example/bit/SPIRS_RoT_g2riscv-imse.bit ```. 
-
-2. Open the Hardware Manager of Vivado. Then, program the FPGA using the bitstream.
-
-3. Due to the amount of space required to set the SO, contact <a href="#contact">here</a> to install the SD. 
-
-4. Copy all the repository in the SD.
-
-## Prerequisites and considerations for the SPIRS platform <a name="pre-g2spirs"></a>
-
-1. Download the platform provided by CEA from the SPIRS nextcloud: https://www.spirs-project.eu/nextcloud/index.php/apps/files/?dir=/SPIRS/Technical_meetings/WP5/20231206_SPIRS_Platform_delivery&fileid=65154
-
-2. Follow the instructions to program the Genesys-2 board and write the SD.
-
-3. ``git clone git@gitlab.com:hwsec/lib_rot_spirs.git`` in your host system at the same directory level as  ``` SPIRS_WP5_delivery``` folder.
-
-4. After the installation of the library in the host system, and cross compilation of any file that uses any function of the library, it is necesary to copy ```RoT_SPIRS/build/librotspirs.so``` from the host system to ```/usr/lib/``` and ```/usr/lib/``` in the SPIRS platform.
-
-
-## Installation <a name="ins"></a>
-
-1. For compilation of the library use the next directives:
-
-* For the **PYNQ-Z2 platform**
 ```bash
-make build-pynqz2
+make Test_*N_VALUE*
 ```
 
-* For the Genesys-2 board using the **IMSE platform** in the host system
+where `*N_VALUE*` could be: `509, 677, 821, 701`. So, for example if the user wants to compile something related with the parameter set `ntruhps2048509`, 
+they must issue: `make Test_509`
+
+2. For the use, the program has different input variables:
+	- `-h` : Show the help.
+	- `-hh` : Show the extended help.
+	- `-n` : Number of test to perform.
+	- `-M` : Paralelization coefficient. *Note: For that there must be a bitstream in the folder `N/CL/M`.
+	- `-y` : CL parameter.
+	
+	Also it includes options to debug different parts:
+	- `-d` : debug level
+	- `-c` : number of coefficients to show in the debug. *In order to avoid a data massification on the screen.* 
+		- `DBG == 0: Minimize the print in window.
+		- `DBG == 1: Show the time in each part of the algorithm.
+		- `DBG == 2: Show the extended evaluation of time.
+		- `DBG == 3: Show the coefficients of SW and HW.
+		- `DBG == 4: Show the multiplication operation in SW.
+		- `DBG == 5: Show the multiplication operation in HW.
+		- `DBG == 6: Show the public key.
+		- `DBG == 7: Show the seed and he coefficients of r and h.
+		- `DBG == 8: Show the multiplication operation in SW 3 ROUND.
+		- `DBG == 9: Show the cuphertext of 3 ROUND, LIBNTRU, HW.
+		- `DBG == 10: Show the hash of rm.
+		- `DBG == 11: ***ONLY FOR PERFORMING THE SEED ANALYSIS.*** It generates the file `r.txt` .
+
+An example, if it is desired to performance 1000 tests on the `ntruhps2048509` parameter set, using a confident limit of 400 with a parallelization coefficient of 10, 
+it has to be typed: `Test_509 -n 1000 -M 10 -y 400`
+
+## Installation and Use of the Demo <a name="ins"></a>
+
+The main idea of the Demo is to interconnect two devices and share information using PQC as the next figure shows. In this case, two Pynq platforms are interconnected 
+in a local network. The two of them are going to generate the key pair (public and private keys). Then, one of them is going to recive the public key of the other one using 
+this key to encapsulate a shared secret. Then the ciphertext generated (with the information of the shared secret) is sent to the other platform that will use the 
+private key to decapsulate and extract the shared secret. 
+
+![](images/demo_ntru.jpg)
+
+1. For compilation of a specific demo:
+
 ```bash
-make build-g2riscv-imse
+make Demo_*N_VALUE*
 ```
 
-* For the Genesys-2 board using the **SPIRS platform**
-```bash
-make build-g2riscv-spirs
-```
+where `*N_VALUE*` could be: `509, 677, 821, 701`. So, for example if the user wants to compile something related with the parameter set `ntruhps2048509`, 
+they must issue: `make Demo_509`
 
-2. Then the library has to be install:
-```bash
-make install
-```
+2. For the use, the program has different input variables:
+	- `-h` : Show the help.
+	- `-k` : Key generation.
+	- `-e` : Encapsulation. 
+	- `-d` : Decapsulation.
+	
+	Also it includes verbose options:
+	- `-v` : verbose level level
+		- `1`: Show only functions.
+		- `2`: Show intermediate results.
+		- `3`: Show keys.
 
-3. To uninstall the library:
-```bash
-make uninstall
-```
+## Example of the Demo <a name="ins"></a>
 
-## Example <a name="exa"></a>
+A demo video example can be seen in the next [link](https://saco.csic.es/index.php/s/Ze9GETKY7zzMJ23). 
 
-* In the file ``` example/main.c ``` there is an example of each function. 
-* To compile and to use the **RoT library**, it has to be used the order ```make pynqz2```, ```make g2riscv-imse``` or ```make g2riscv-spirs``` depending on the board or the platform we are using.
-* To compile and to use the **RoT repository**, it has to be used the order ```make pynqz2-repo```, ```make g2riscv-imse-repo``` or ```make g2riscv-spirs-repo``` depending on the board or the platform we are using.
+For the example, two platforms will be used: <code style="color : cyan">#PLATFORM_1</code> and <code style="color : magenta">#PLATFORM_2</code>
+
 
 ## Note for version <a name="note"></a>
-### v. 3.0
+### v. 1.0
 
-* Eliminated the dependence of OpenSSL library
-* Added the frequency reduction for PYNQZ2 board in the main.c example file.
-* Reviewed the Makefile of both library and example compilation.
-
-### v. 3.1
-
-* Added a new functionality in the makefile of the example that can use the library or the repository.
-* Added a new functionality in which it is possible to modify the number of tests that the PUF carried out in the enrollment process. It can be modified through the parameter ```E_TESTS``` in ``` RoT_SPIRS\common\common.h ```. In order to apply these changes the library must be compiled and installed again.
-* Readme modified.
-
-### v. 4.0
-
-* Modification of the makefile that can install the library on the host system for use it on the SPIRS platform.
-* Redefinition of the PUF function for the enrollment and retrieval of a random key generated with the PUF.
-* Readme modified.
+* Reordered the repository structure.
+* Added a Readme file. 
 
 ## Contact <a name="contact"></a>
 
@@ -167,103 +169,8 @@ _Hardware Cryptography Researcher_
 _Instituto de Microelectrónica de Sevilla (IMSE-CNM), CSIC, Universidad de Sevilla, Seville, Spain_
 
 ## Developers <a name="developers"></a>
-Eros Camacho-Ruiz, Luis F. Rojas-Muñoz, Pablo Navarro, Santiago Sánchez-Solano, Macarena C. .Martínez-Rodríguez
+Eros Camacho-Ruiz
 
 _Instituto de Microelectrónica de Sevilla (IMSE-CNM), CSIC, Universidad de Sevilla, Seville, Spain_
 
-## Functions descriptions <a name="func"></a>
-
-### SHA2-256
-**sha2_256**(unsigned char* in, unsigned char* out, unsigned long long int length, MMIO_WINDOW ms2xl, int DBG)
-
-1. in : input message
-2. out: output hash
-3. length : length of the message 
-4. ms2xl: register window (use as in the example)
-5. DBG: print debug level
-
-### SHA3-512
-**sha3_512**(unsigned char* in, unsigned char* out, unsigned long long int length, MMIO_WINDOW ms2xl, int DBG)
-
-1. in : input message
-2. out: output hash
-3. length : length of the message
-4. ms2xl: register window (use as in the example)
-5. DBG: print debug level
-
-### AES 128
-**aes_128_enc**(MMIO_WINDOW aesWindow, unsigned char* aesOutput_char, unsigned char* aesInput_char, unsigned char* key_char, int iter, int DBG)
-
-1. aesWindow: register window (use as in the example)
-2. aesOutput_char: output ciphertext  (128 bit-block)
-3. aesInput_char: block of 128 bits of the plaintext message
-4. key_char: 128-bit key
-5. iter: if 0, it is working in the 1st iteration then capture the key, otherwise it does not capture the key
-6. DBG: print debug level
-
-**aes_128_dec**(MMIO_WINDOW aesWindow, unsigned char* aesOutput_char, unsigned char* aesInput_char, unsigned char* key_char, int iter, int DBG)
-
-1. aesWindow: register window (use as in the example)
-2. aesOutput_char: output plaintext  (128 bit-block)
-3. aesInput_char: block of 128 bits of the ciphertext message
-4. key_char: 128-bit key
-5. iter: if 0, it is working in the 1st iteration then capture the key, otherwise it does not capture the key
-6. DBG: print debug level
-
-### AES 256
-
-**aes_256_enc**(MMIO_WINDOW aesWindow, unsigned char* aesOutput_char, unsigned char* aesInput_char, unsigned char* key_char, int iter, int DBG)
-
-1. aesWindow: register window (use as in the example)
-2. aesOutput_char: output ciphertext  (256 bit-block)
-3. aesInput_char: block of 256 bits of the plaintext message
-4. key_char: 256-bit key
-5. iter: if 0, it is working in the 1st iteration then capture the key, otherwise it does not capture the key
-6. DBG: print debug level
-
-**aes_256_dec**(MMIO_WINDOW aesWindow, unsigned char* aesOutput_char, unsigned char* aesInput_char, unsigned char* key_char, int iter, int DBG)
-
-1. aesWindow: register window (use as in the example)
-2. aesOutput_char: output plaintext  (256 bit-block)
-3. aesInput_char: block of 256 bits of the ciphertext message
-4. key_char: 256-bit key
-5. iter: if 0, it is working in the 1st iteration then capture the key, otherwise it does not capture the key
-6. DBG: print debug level
-
-### EDDSA
-
-**sign_eddsa**(MMIO_WINDOW my_window, unsigned char *secret, unsigned char *msg, int len_msg, unsigned char *signature, int DBG)
-
-1. my_window: register window (use as in the example)
-2. secret : 256-private key
-3. msg: input message
-4. len_msg : length of the message
-5. signature: output signature
-6. DBG: print debug level
-
-int **verify_eddsa**(MMIO_WINDOW my_window, unsigned char *public, unsigned char *msg, int len_msg, unsigned char *signature, int DBG)
-
-1. my_window: register window (use as in the example)
-2. public : 256-public key
-3. msg: input message
-4. len_msg : length of the message 
-5. signature: input signature
-6. DBG: print debug level
-
-### PUF
-
-**puf**(MMIO_WINDOW puf_window, int chal, int K_bits, int RC,  int PufID, unsigned char* out)
-
-1. puf_window: : register window (use as in the example)
-2. chal: if 1 performs enrollment, otherwise retreive a key
-3. K_bits: set output key length
-4. RC: repitition code to perform retrieval process
-5. PufID: label each of the two instanciated PUFs
-6. out: output key
-		
-**trng**(MMIO_WINDOW puf_window,int K_bits, unsigned char* out)
-
-1. puf_window: : register window (use as in the example)
-2. K_bits: set output random number length
-3. out: output random number
 
