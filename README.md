@@ -45,7 +45,7 @@ The main idea of this repository is twofold:
 
 The IP module is delivered in the ```ntru_ms2xs_8.0``` folder. 
 
-![Alt text](images/AU.jpg)
+!(images/schematic_NTRU.jpg)
 
 For further information, see Chapter 4 of the [PhD Dissertation](https://github.com/ErosCamacho/PhD_Dissertation/blob/main/PhD_Thesis_Eros_Camacho_Ruiz_vFinal_rev.pdf)
 
