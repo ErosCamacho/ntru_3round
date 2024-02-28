@@ -12,6 +12,7 @@ The main idea of this repository is twofold:
 ## Table of Contents
   <ol>
     <li><a href="#dir-struc">Directory structure</a></li>
+    <li><a href="#ip-integ">IP Integration</a></li>
     <li><a href="#pre-pynqz2">Prerequisites for the Pynq-Z2 platform</a></li>
     <li><a href="#pre-g2imse">Prerequisites for the IMSE platform</a></li>
 	<li><a href="#pre-g2spirs">Prerequisites for the SPIRS platform</a></li>
@@ -41,11 +42,33 @@ The main idea of this repository is twofold:
     - demo.c: main file to demo
 - README.md: this file 
 
-## IP Integration <a name="dir-struc"></a>
+## IP Integration <a name="ip-integ"></a>
 
-The IP module is delivered in the ```ntru_ms2xs_8.0``` folder. 
+The IP module is delivered in the ```ntru_ms2xs_8.0``` folder. The design of the core part of the IP module is depicted in the next figure. The arithmetic unit (AU) is shown 
+in the green box. The three different operation modes are ruled by the coefficients of the blind polynomial: -1,1 and 0. The parameter ```M``` is depicted as paralellization 
+coefficient that means the number of AUs are working in parallel. 
 
 ![](images/schematic_NTRU.jpg)
+
+The IP integration is finished adding an user interface in which it is possible to modify the next parameters of the polynomial multiplier:
+- ```M```: is the number of AUs that are working in parallel.
+- ```N```: the number of the coefficients of the polynomial. See NTRU documentation.
+- ```Q```: is the number that symbolizes the modQ reduction in the polynomial ring. 
+- ```max_cycles```: is the number of maximum cycles it is possible to accelerate the algorithm avoind timing attacks. See PhD Dissertation.
+
+![](images/IP_integrator_ntru.png)
+
+The next table shows all the implementations delivered in this repository. There are in total 8 different strategies: 4 parameters set in the NTRU where in each one the
+`max_cycles` value was set in `N` and `CL` (Confident Limit). From each configuration there are different values of `M`: `1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,32,64,128,256`.
+That is basically the content of the folder `NTRU_3Round.rar\bit\`. As a final user, you can discard (and remove) other implementations and remake the embedded integration using the 
+configuration more suitable for your interest. 
+
+| Parameter set |  N  | CL |
+| :------------ | --- | --- |
+| `ntruhps2048509` | 509 | 400 |
+| `ntruhps2048677` | 677 | 516 |
+| `ntruhps2048821` | 821 | 625 |
+| `ntruhrss2048701` | 701 | 533 |
 
 For further information, see Chapter 4 of the [PhD Dissertation](https://github.com/ErosCamacho/PhD_Dissertation/blob/main/PhD_Thesis_Eros_Camacho_Ruiz_vFinal_rev.pdf)
 
