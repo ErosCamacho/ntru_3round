@@ -101,18 +101,18 @@ they must issue: `make Test_509`
 	Also it includes options to debug different parts:
 	- `-d` : debug level
 	- `-c` : number of coefficients to show in the debug. *In order to avoid a data massification on the screen.* 
-		- `DBG == 0`: Minimize the print in window.
-		- `DBG == 1`: Show the time in each part of the algorithm.
-		- `DBG == 2`: Show the extended evaluation of time.
-		- `DBG == 3`: Show the coefficients of SW and HW.
-		- `DBG == 4`: Show the multiplication operation in SW.
-		- `DBG == 5`: Show the multiplication operation in HW.
-		- `DBG == 6`: Show the public key.
-		- `DBG == 7`: Show the seed and he coefficients of r and h.
-		- `DBG == 8`: Show the multiplication operation in SW 3 ROUND.
-		- `DBG == 9`: Show the cuphertext of 3 ROUND, LIBNTRU, HW.
-		- `DBG == 10`: Show the hash of rm.
-		- `DBG == 11`: ***ONLY FOR PERFORMING THE SEED ANALYSIS.*** It generates the file `r.txt` .
+		- `0`: Minimize the print in window.
+		- `1`: Show the time in each part of the algorithm.
+		- `2`: Show the extended evaluation of time.
+		- `3`: Show the coefficients of SW and HW.
+		- `4`: Show the multiplication operation in SW.
+		- `5`: Show the multiplication operation in HW.
+		- `6`: Show the public key.
+		- `7`: Show the seed and he coefficients of r and h.
+		- `8`: Show the multiplication operation in SW 3 ROUND.
+		- `9`: Show the cuphertext of 3 ROUND, LIBNTRU, HW.
+		- `10`: Show the hash of rm.
+		- `11`: ***ONLY FOR PERFORMING THE SEED ANALYSIS.*** It generates the file `r.txt` .
 
 An example, if it is desired to performance 1000 tests on the `ntruhps2048509` parameter set, using a confident limit of 400 with a parallelization coefficient of 10, 
 it has to be typed: `Test_509 -n 1000 -M 10 -y 400`
