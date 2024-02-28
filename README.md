@@ -151,7 +151,36 @@ they must issue: `make Demo_509`
 
 A demo video example can be seen in the next [link](https://saco.csic.es/index.php/s/Ze9GETKY7zzMJ23). 
 
-For the example, two platforms will be used: $${\color{red}#PLATFORM_1}$$ and <code style="color : magenta">#PLATFORM_2</code>
+For the example, two platforms will be used: #PLATFORM_1 and #PLATFORM_2. It is recommended that the verbose level be 2 in order to see all the intermediate results.
+
+1. The first step is to perform the key generation in both platforms:
+```bash
+Demo_509 -k -v 2
+```
+
+2. The next step is to send the public key of the #PLATFORM_1 to the #PLATFORM_2:
+```bash
+send_pk.sh
+```
+*Note: the configuration set in `send_pk.sh` can be modified to the final user. It has been set to my personal set-up.*
+
+3. The next step is to encapsulate the shared secret using the public key in the #PLATFORM_2.
+```bash
+Demo_509 -e -v 2
+```
+
+4. The next step is to send the ciphertext generated in the below step back to the #PLATFORM_1:
+```bash
+send_ct.sh
+```
+*Note: the configuration set in `send_ct.sh` can be modified to the final user. It has been set to my personal set-up.*
+
+5. The next step is to recover the shared secret in the #PLATFORM_1 decapsulating:
+```bash
+Demo_509 -d -v 2
+```
+
+At the end, it will check that both platforms share the same secrets.
 
 
 ## Note for version <a name="note"></a>
