@@ -85,10 +85,10 @@ For further information, see Chapter 4 of the [PhD Dissertation](https://github.
 1. For compilation of a specific test:
 
 ```bash
-make Test_*N_VALUE*
+make Test_N_VALUE
 ```
 
-where `*N_VALUE*` could be: `509, 677, 821, 701`. So, for example if the user wants to compile something related with the parameter set `ntruhps2048509`, 
+where `N_VALUE` can be: `509, 677, 821, 701`. So, for example if the user wants to compile something related with the parameter set `ntruhps2048509`, 
 they must issue: `make Test_509`
 
 2. For the use, the program has different input variables:
@@ -101,18 +101,18 @@ they must issue: `make Test_509`
 	Also it includes options to debug different parts:
 	- `-d` : debug level
 	- `-c` : number of coefficients to show in the debug. *In order to avoid a data massification on the screen.* 
-		- `DBG == 0: Minimize the print in window.
-		- `DBG == 1: Show the time in each part of the algorithm.
-		- `DBG == 2: Show the extended evaluation of time.
-		- `DBG == 3: Show the coefficients of SW and HW.
-		- `DBG == 4: Show the multiplication operation in SW.
-		- `DBG == 5: Show the multiplication operation in HW.
-		- `DBG == 6: Show the public key.
-		- `DBG == 7: Show the seed and he coefficients of r and h.
-		- `DBG == 8: Show the multiplication operation in SW 3 ROUND.
-		- `DBG == 9: Show the cuphertext of 3 ROUND, LIBNTRU, HW.
-		- `DBG == 10: Show the hash of rm.
-		- `DBG == 11: ***ONLY FOR PERFORMING THE SEED ANALYSIS.*** It generates the file `r.txt` .
+		- `DBG == 0`: Minimize the print in window.
+		- `DBG == 1`: Show the time in each part of the algorithm.
+		- `DBG == 2`: Show the extended evaluation of time.
+		- `DBG == 3`: Show the coefficients of SW and HW.
+		- `DBG == 4`: Show the multiplication operation in SW.
+		- `DBG == 5`: Show the multiplication operation in HW.
+		- `DBG == 6`: Show the public key.
+		- `DBG == 7`: Show the seed and he coefficients of r and h.
+		- `DBG == 8`: Show the multiplication operation in SW 3 ROUND.
+		- `DBG == 9`: Show the cuphertext of 3 ROUND, LIBNTRU, HW.
+		- `DBG == 10`: Show the hash of rm.
+		- `DBG == 11`: ***ONLY FOR PERFORMING THE SEED ANALYSIS.*** It generates the file `r.txt` .
 
 An example, if it is desired to performance 1000 tests on the `ntruhps2048509` parameter set, using a confident limit of 400 with a parallelization coefficient of 10, 
 it has to be typed: `Test_509 -n 1000 -M 10 -y 400`
@@ -129,10 +129,10 @@ private key to decapsulate and extract the shared secret.
 1. For compilation of a specific demo:
 
 ```bash
-make Demo_*N_VALUE*
+make Demo_N_VALUE
 ```
 
-where `*N_VALUE*` could be: `509, 677, 821, 701`. So, for example if the user wants to compile something related with the parameter set `ntruhps2048509`, 
+where `N_VALUE` can be: `509, 677, 821, 701`. So, for example if the user wants to compile something related with the parameter set `ntruhps2048509`, 
 they must issue: `make Demo_509`
 
 2. For the use, the program has different input variables:
@@ -151,7 +151,7 @@ they must issue: `make Demo_509`
 
 A demo video example can be seen in the next [link](https://saco.csic.es/index.php/s/Ze9GETKY7zzMJ23). 
 
-For the example, two platforms will be used: <code style="color : cyan">#PLATFORM_1</code> and <code style="color : magenta">#PLATFORM_2</code>
+For the example, two platforms will be used: $${\color{red}#PLATFORM_1}$$ and <code style="color : magenta">#PLATFORM_2</code>
 
 
 ## Note for version <a name="note"></a>
