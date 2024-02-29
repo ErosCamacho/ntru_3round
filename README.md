@@ -27,16 +27,16 @@ The main idea of this repository is twofold:
 ## Directory structure <a name="dir-struc"></a>
 
 - ntru_ms2xs_8.0: the IP module of the NTRU polynomial multiplier
-- NTRU_3Round.rar: the comprised file of the NTRU software implementation and the HW call drivers
+- ntru_3round.tar.gz: the comprised file of the NTRU software implementation and the HW call drivers
     - result_test: this folder is generated to store the performance test of the NTRU.
     - bit: stores all the embedded system integrator as bitstream to check on the tests. (see the Table below)
     - data_in: stores the input ciphertext in binary format when the demo is running.
     - data_out: stores the output ciphertext in binary format when the demo is running.
     - gen_keys: stores the generated keys.
     - pub_keys: stores the public keys of the devices to connect.
-    - src: source files
+    - ntru: source files
         - common: Low-level drivers and utilities
-        - ntru: NTRU 3Round SW libraries	
+        - src: NTRU 3Round SW libraries	
     - Makefile: to generate the executables for the library
     - Test.c: main file to tests
     - demo.c: main file to demo
@@ -115,6 +115,8 @@ they must issue: `make Test_509`
 An example, if it is desired to performance 1000 tests on the `ntruhps2048509` parameter set, using a confident limit of 400 with a parallelization coefficient of 10, 
 it has to be typed: `Test_509 -n 1000 -M 10 -y 400`
 
+***To run the tests, it is necessary to set the root privileges***
+
 ## Installation and Use of the Demo <a name="ins-demo"></a>
 
 The main idea of the Demo is to interconnect two devices and share information using PQC as the next figure shows. In this case, two Pynq platforms are interconnected 
@@ -149,11 +151,11 @@ they must issue: `make Demo_509`
 
 A demo video example can be seen in the next [link](https://saco.csic.es/index.php/s/Ze9GETKY7zzMJ23). 
 
-For the example, two platforms will be used: #PLATFORM_1 and #PLATFORM_2. It is recommended that the verbose level be 2 in order to see all the intermediate results.
+For the example, two platforms will be used: #PLATFORM_1 and #PLATFORM_2. *It is recommended that the verbose level be 3 in order to see all the intermediate results.*
 
 1. The first step is to perform the key generation in both platforms:
 ```bash
-Demo_509 -k -v 2
+Demo_509 -k -v 3
 ```
 
 2. The next step is to send the public key of the #PLATFORM_1 to the #PLATFORM_2:
@@ -164,7 +166,7 @@ send_pk.sh
 
 3. The next step is to encapsulate the shared secret using the public key in the #PLATFORM_2.
 ```bash
-Demo_509 -e -v 2
+Demo_509 -e -v 3
 ```
 
 4. The next step is to send the ciphertext generated in the below step back to the #PLATFORM_1:
@@ -175,11 +177,12 @@ send_ct.sh
 
 5. The next step is to recover the shared secret in the #PLATFORM_1 decapsulating:
 ```bash
-Demo_509 -d -v 2
+Demo_509 -d -v 3
 ```
 
 At the end, it will check that both platforms share the same secrets.
 
+***To run the demo, it is necessary to set the root privileges***
 
 ## Note for version <a name="note"></a>
 ### v. 1.0
@@ -193,11 +196,11 @@ At the end, it will check that both platforms share the same secrets.
 
 _Hardware Cryptography Researcher_ 
 
-_Instituto de Microelectrónica de Sevilla (IMSE-CNM), CSIC, Universidad de Sevilla, Seville, Spain_
+_Instituto de MicroelectrÃ³nica de Sevilla (IMSE-CNM), CSIC, Universidad de Sevilla, Seville, Spain_
 
 ## Developers <a name="developers"></a>
 Eros Camacho-Ruiz
 
-_Instituto de Microelectrónica de Sevilla (IMSE-CNM), CSIC, Universidad de Sevilla, Seville, Spain_
+_Instituto de MicroelectrÃ³nica de Sevilla (IMSE-CNM), CSIC, Universidad de Sevilla, Seville, Spain_
 
 
